@@ -40,9 +40,11 @@ function isIn(list, value) {
 }
 module.exports.isIn = isIn;
 
+const isArray = a => a.hasOwnProperty("length");
+
 const each = (list, func) => {
   if (isFalse(list)) return;
-  if (list.hasOwnProperty("length")) {
+  if (isArray(list)) {
     for (let i=0; i < list.length; i++) {
       func(list[i]);
     }
@@ -89,8 +91,10 @@ module.exports.getKeys = getKeys;
 function get(obj, key) {
   if (arguments.length == 1) return curryr(get)(obj);
   if (isFalse(obj)) return undefined;
-  if (hasKey(obj, key))
+  if (isArray(obj)) { // key == length
+    if (obj.length <= key) return undefined; // out of range
     return obj[key];
+  } else if (hasKey(obj, key)) return obj[key];
   return undefined;
 }
 module.exports.get = get;
@@ -136,9 +140,4 @@ function reduce(list, func, base) {
 }
 module.exports.reduce = reduce;
 
-function at(list, index) {
-  if (isFalse(list)) return undefined;
-  if (get(list,"length") >= index) return undefined;
-  return list[index];
-}
-module.exports.at = at;
+

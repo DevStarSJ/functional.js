@@ -172,7 +172,6 @@ describe("get()", function() {
   });
   it('key in object', function() {
     const id = _.get(obj, "id");
-    console.log(id);
     assert.equal(_.get(obj, "id"), obj.id);
   });
   it('key not in object -> undefined', function() {
@@ -181,5 +180,11 @@ describe("get()", function() {
   it('curryr test', function() {
     const getId = _.get("id");
     assert.equal(getId(obj), obj.id);
+  });
+  it('index in list', function() {
+    assert.equal(_.get(list, 3), 4);
+  });
+  it('index not in list -> undefined', function() {
+    assert.equal(_.get(list, 4), undefined);
   });
 });
