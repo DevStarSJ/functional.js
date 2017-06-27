@@ -188,3 +188,40 @@ describe("get()", function() {
     assert.equal(_.get(list, 4), undefined);
   });
 });
+
+
+describe("map()", function() {
+  it('map test', function() {
+    assert.equal(
+      _.isSameList(
+        _.map(list, a => a*a),
+        [1,4,9,16]), true);
+  });
+  it('curryr map test', function() {
+    const square = _.map(a => a*a);
+    assert.equal(
+      _.isSameList(
+        square(list),
+        [1,4,9,16]), true);
+  });
+});
+
+
+describe("reduce()", function() {
+  it('reduce test', function() {
+    assert.equal(_.reduce(list, (a,b) => a+b), 10);
+  });
+  it('reduce with default value test', function() {
+    assert.equal(_.reduce(list, (a,b) => a+b, -10), 0);
+  });
+});
+
+
+describe("pipe()", function() {
+  it('pipe test', function () {
+    const square = _.map(a => a * a);
+    const get4 = _.get(3);
+    const func = _.pipe(square, get4);
+    assert.equal(func(list), 16);
+  });
+});

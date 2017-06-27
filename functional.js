@@ -100,24 +100,13 @@ function get(obj, key) {
 module.exports.get = get;
 
 
-//////// Complete Test
-
-function pipe() {
-  const func_list = arguments;
-  return function(arg) {
-    return reduce(func_list, function(memo, fn) {
-      return fn(memo);
-    }, arg);
-  }
-}
-module.exports.pipe = pipe;
+// map, reduce
 
 function map(list, func) {
   if (isFalse(list)) return [];
+  if (arguments.length == 1) return curryr(map)(list);
   let result = [];
-  for (let i = 0; i < list.length; i++) {
-    result.push(func(at(list,i)));
-  }
+  each(list, a => result.push(func(a)));
   return result;
 }
 module.exports.map = map;
@@ -129,11 +118,11 @@ function reduce(list, func, base) {
 
   if (isFalse(base)) {
     start = 1;
-    result = at(list,0);
+    result = get(list,0);
   }
 
   for (let i = start; i < list.length; i++) {
-    result = func(result, at(list,i));
+    result = func(result, get(list,i));
   }
 
   return result;
@@ -141,3 +130,14 @@ function reduce(list, func, base) {
 module.exports.reduce = reduce;
 
 
+// pipe
+
+function pipe() {
+  const func_list = arguments;
+  return function(arg) {
+    return reduce(func_list, function(memo, fn) {
+      return fn(memo);
+    }, arg);
+  }
+}
+module.exports.pipe = pipe;
