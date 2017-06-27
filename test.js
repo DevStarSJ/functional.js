@@ -85,6 +85,7 @@ describe("each()", function() {
   });
 });
 
+
 describe("isIn()", function() {
   it('undefined -> false', function() {
     assert.equal(_.isIn(undefined), false);
@@ -115,6 +116,7 @@ describe("isIn()", function() {
   });
 });
 
+
 describe("getKeys()", function() {
   it('undefined -> []', function() {
     assert.equal(
@@ -138,5 +140,23 @@ describe("getKeys()", function() {
   });
 });
 
+
+describe("hasKey()", function() {
+  it('undefined -> false', function() {
+    assert.equal(_.hasKey(undefined), false);
+  });
+  it('null -> false', function() {
+    assert.equal(_.hasKey(null), false);
+  });
+  it('"" -> false', function() {
+    assert.equal(_.hasKey(""), false);
+  });
+  it('key in object -> true', function() {
+    assert.equal(_.hasKey(obj, "id"), true);
+  });
+  it('key not in object -> false', function() {
+    assert.equal(_.hasKey(obj, "id1"), false);
+  });
+});
 
 

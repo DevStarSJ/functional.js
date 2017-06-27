@@ -74,11 +74,11 @@ module.exports.get = get;
 get = curryr(get)
 const getSql = get("sql");
 
-function hasKey(obj, key) {
-  if (isFalse(obj)) return undefined;
+// getKeys, hasKey
 
-  const keys = getKeys(obj);
-  return isIn(keys, key);
+function hasKey(obj, key) {
+  if (isFalse(obj)) return false;
+  return isIn(getKeys(obj), key);
 }
 module.exports.hasKey = hasKey;
 
@@ -127,6 +127,7 @@ function isSameList(left, right) {
 module.exports.isSameList = isSameList;
 
 // isTrue, isFalse
+
 const isTrue = obj => !isFalse(obj)
 module.exports.isTrue = isTrue;
 
