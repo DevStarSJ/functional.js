@@ -1,6 +1,6 @@
 "use strict"
 
-export function pipe() {
+function pipe() {
   const func_list = arguments;
   return function(arg) {
     return reduce(func_list, function(memo, fn) {
@@ -8,8 +8,9 @@ export function pipe() {
     }, arg);
   }
 }
+module.exports.pipe = pipe;
 
-export function map(list, func) {
+function map(list, func) {
   if (isFalse(list)) return [];
   let result = [];
   for (let i = 0; i < list.length; i++) {
@@ -17,8 +18,9 @@ export function map(list, func) {
   }
   return result;
 }
+module.exports.map = map;
 
-export function reduce(list, func, base) {
+function reduce(list, func, base) {
   if (isFalse(list)) return base;
   let start = 0;
   let result = base;
@@ -34,52 +36,59 @@ export function reduce(list, func, base) {
 
   return result;
 }
+module.exports.reduce = reduce;
 
-export function curry (func) {
+function curry (func) {
   return function(a) {
     return function(b) {
       return func(a,b);
     }
   }
 }
+module.exports.curry = curry;
 
-export function curryr (func) {
+function curryr (func) {
   return function(b) {
     return function(a) {
       return func(a,b);
     }
   }
 }
+module.exports.curryr = curryr
 
-export function at(list, index) {
+function at(list, index) {
   if (isFalse(list)) return undefined;
   if (get(list,"length") >= index) return undefined;
   return list[index];
 }
+module.exports.at = at;
 
-export function get(obj, key) {
+function get(obj, key) {
   if (isFalse(obj)) return undefined;
   if (hasKey(obj, key))
     return obj[key];
   return undefined;
 }
+module.exports.get = get;
 
 get = curryr(get)
 const getSql = get("sql");
 
-export function hasKey(obj, key) {
+function hasKey(obj, key) {
   if (isFalse(obj)) return undefined;
 
   const keys = getKeys(obj);
   return isIn(keys, key);
 }
+module.exports.hasKey = hasKey;
 
-export function isIn(list, value) {
+function isIn(list, value) {
   if (isFalse(list)) return undefined;
   return list.indexOf(value) >= 0 ? true : false;
 }
+module.exports.isIn = isIn;
 
-export function getKeys(obj) {
+function getKeys(obj) {
   if (isFalse(obj)) return undefined;
 
   let keys = []
@@ -88,11 +97,16 @@ export function getKeys(obj) {
   }
   return keys;
 }
+module.exports.getKeys = getKeys;
 
-export function isTrue(obj) {
+function isTrue(obj) {
   return !isFalse(obj)
 }
+module.exports.isTrue = isTrue;
 
-export function isFalse(obj) {
+function isFalse(obj) {
   return !obj;
 }
+module.exports.isFalse = isFalse;
+
+console.log(isFalse(undefined));
