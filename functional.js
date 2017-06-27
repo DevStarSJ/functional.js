@@ -99,14 +99,9 @@ function getKeys(obj) {
 }
 module.exports.getKeys = getKeys;
 
-function isTrue(obj) {
-  return !isFalse(obj)
-}
+// isTrue, isFalse
+const isTrue = obj => !isFalse(obj)
 module.exports.isTrue = isTrue;
 
-function isFalse(obj) {
-  return !obj;
-}
+const isFalse = obj => !obj;
 module.exports.isFalse = isFalse;
-
-console.log(isFalse(undefined));
