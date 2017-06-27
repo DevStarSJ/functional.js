@@ -160,3 +160,26 @@ describe("hasKey()", function() {
 });
 
 
+describe("get()", function() {
+  it('undefined -> undefined', function() {
+    assert.equal(_.get(undefined, "id"), undefined);
+  });
+  it('null -> undefined', function() {
+    assert.equal(_.get(null, "id"), undefined);
+  });
+  it('"" -> undefined', function() {
+    assert.equal(_.get("", "id"), undefined);
+  });
+  it('key in object', function() {
+    const id = _.get(obj, "id");
+    console.log(id);
+    assert.equal(_.get(obj, "id"), obj.id);
+  });
+  it('key not in object -> undefined', function() {
+    assert.equal(_.get(obj, "id1"), undefined);
+  });
+  it('curryr test', function() {
+    const getId = _.get("id");
+    assert.equal(getId(obj), obj.id);
+  });
+});
