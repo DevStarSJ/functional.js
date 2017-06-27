@@ -51,3 +51,65 @@ describe("isTrue()", function() {
   });
 });
 
+describe("each()", function() {
+  it('undefined -> undefined', function() {
+    assert.equal(_.each(undefined), undefined);
+  });
+  it('null -> undefined', function() {
+    assert.equal(_.each(null), undefined);
+  });
+  it('"" -> undefined', function() {
+    assert.equal(_.each(""), undefined);
+  });
+  it('object', function() {
+    let result = [];
+    _.each(obj, a => result.push(a));
+    const expected = [1, "Luna", 23];
+    assert.equal(_.isSameList(result, expected), true);
+  });
+  it('list', function() {
+    let result = [];
+    _.each(list, a => result.push(a));
+    const expected = [1, 2, 3, 4];
+    assert.equal(_.isSameList(result, expected), true);
+  });
+  it('array_like', function() {
+    let result = [];
+    _.each(array_like, a => result.push(a));
+    const expected = [1, 2, 3];
+    assert.equal(_.isSameList(result, expected), true);
+  });
+});
+
+describe("isIn()", function() {
+  it('undefined -> false', function() {
+    assert.equal(_.isIn(undefined), false);
+  });
+  it('null -> false', function() {
+    assert.equal(_.isIn(null), false);
+  });
+  it('"" -> false', function() {
+    assert.equal(_.isIn(""), false);
+  });
+  it('value in object -> true', function() {
+    assert.equal(_.isIn(obj, "Luna"), true);
+  });
+  it('value not in object -> false', function() {
+    assert.equal(_.isIn(obj, "Luna1"), false);
+  });
+  it('value in list  -> true', function() {
+    assert.equal(_.isIn(list, 4), true);
+  });
+  it('value not in list  -> false', function() {
+    assert.equal(_.isIn(list, 0), false);
+  });
+  it('value in array_like -> true', function() {
+    assert.equal(_.isIn(array_like, 3), true);
+  });
+  it('value not in array_like -> false', function() {
+    assert.equal(_.isIn(array_like, 0), false);
+  });
+});
+
+
+

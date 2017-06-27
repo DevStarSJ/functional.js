@@ -82,12 +82,6 @@ function hasKey(obj, key) {
 }
 module.exports.hasKey = hasKey;
 
-function isIn(list, value) {
-  if (isFalse(list)) return undefined;
-  return list.indexOf(value) >= 0 ? true : false;
-}
-module.exports.isIn = isIn;
-
 function getKeys(obj) {
   if (isFalse(obj)) return undefined;
 
@@ -98,6 +92,39 @@ function getKeys(obj) {
   return keys;
 }
 module.exports.getKeys = getKeys;
+
+// isIn, each, isSameList
+
+function isIn(list, value) {
+  if (isFalse(list)) return false;
+  let result = false;
+  each(list, a => { if (a == value) result = true; });
+  return result;
+}
+module.exports.isIn = isIn;
+
+const each = (list, func) => {
+  if (isFalse(list)) return;
+  if (list.hasOwnProperty("length")) {
+    for (let i=0; i < list.length; i++) {
+      func(list[i]);
+    }
+  } else {
+    for (var key in list) func(list[key]);
+  }
+}
+module.exports.each = each;
+
+function isSameList(left, right) {
+  const length = left.length;
+  if (length != right.length) return false;
+  for (let i = 0; i < length; i++) {
+    if (left[i] != right[i])
+      return false;
+  }
+  return true;
+}
+module.exports.isSameList = isSameList;
 
 // isTrue, isFalse
 const isTrue = obj => !isFalse(obj)
