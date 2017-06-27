@@ -83,7 +83,7 @@ function hasKey(obj, key) {
 module.exports.hasKey = hasKey;
 
 function getKeys(obj) {
-  if (isFalse(obj)) return undefined;
+  if (isFalse(obj)) return [];
 
   let keys = []
   for (var key in obj) {

@@ -8,6 +8,11 @@ const obj = { id: 1, name: "Luna", age: 23 };
 const list = [ 1, 2, 3, 4 ];
 const array_like = {0:1, 1:2, 2:3, length: 3};
 
+const empty_list = [];
+const list_for_array_like = [1, 2, 3];
+const list_for_obj = [1, "Luna", 23];
+const keys_for_obj = ["id", "name", "age"];
+
 
 describe("isFalse()", function() {
   it('undefined -> true', function() {
@@ -30,6 +35,7 @@ describe("isFalse()", function() {
   });
 });
 
+
 describe("isTrue()", function() {
   it('undefined -> false', function() {
     assert.equal(_.isTrue(undefined), false);
@@ -51,6 +57,7 @@ describe("isTrue()", function() {
   });
 });
 
+
 describe("each()", function() {
   it('undefined -> undefined', function() {
     assert.equal(_.each(undefined), undefined);
@@ -64,20 +71,17 @@ describe("each()", function() {
   it('object', function() {
     let result = [];
     _.each(obj, a => result.push(a));
-    const expected = [1, "Luna", 23];
-    assert.equal(_.isSameList(result, expected), true);
+    assert.equal(_.isSameList(result, list_for_obj), true);
   });
   it('list', function() {
     let result = [];
     _.each(list, a => result.push(a));
-    const expected = [1, 2, 3, 4];
-    assert.equal(_.isSameList(result, expected), true);
+    assert.equal(_.isSameList(result, list), true);
   });
   it('array_like', function() {
     let result = [];
     _.each(array_like, a => result.push(a));
-    const expected = [1, 2, 3];
-    assert.equal(_.isSameList(result, expected), true);
+    assert.equal(_.isSameList(result, list_for_array_like), true);
   });
 });
 
@@ -108,6 +112,29 @@ describe("isIn()", function() {
   });
   it('value not in array_like -> false', function() {
     assert.equal(_.isIn(array_like, 0), false);
+  });
+});
+
+describe("getKeys()", function() {
+  it('undefined -> []', function() {
+    assert.equal(
+      _.isSameList(
+        _.getKeys(undefined), empty_list), true);
+  });
+  it('null -> []', function() {
+    assert.equal(
+      _.isSameList(
+        _.getKeys(null), empty_list), true);
+  });
+  it('"" -> []', function() {
+    assert.equal(
+      _.isSameList(
+        _.getKeys(""), empty_list), true);
+  });
+  it('object', function() {
+    assert.equal(
+      _.isSameList(
+        _.getKeys(obj), keys_for_obj), true);
   });
 });
 
