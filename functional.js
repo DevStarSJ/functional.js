@@ -38,24 +38,6 @@ function reduce(list, func, base) {
 }
 module.exports.reduce = reduce;
 
-function curry (func) {
-  return function(a) {
-    return function(b) {
-      return func(a,b);
-    }
-  }
-}
-module.exports.curry = curry;
-
-function curryr (func) {
-  return function(b) {
-    return function(a) {
-      return func(a,b);
-    }
-  }
-}
-module.exports.curryr = curryr
-
 function at(list, index) {
   if (isFalse(list)) return undefined;
   if (get(list,"length") >= index) return undefined;
@@ -73,6 +55,26 @@ module.exports.get = get;
 
 get = curryr(get)
 const getSql = get("sql");
+
+// curry, curryr
+
+function curry (func) {
+  return function(a) {
+    return function(b) {
+      return func(a, b);
+    }
+  }
+}
+module.exports.curry = curry;
+
+function curryr (func) {
+  return function(b) {
+    return function(a) {
+      return func(a, b);
+    }
+  }
+}
+module.exports.curryr = curryr
 
 // getKeys, hasKey
 
