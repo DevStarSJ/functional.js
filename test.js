@@ -267,3 +267,22 @@ describe("reject()", function() {
     assert.equal(_.isSameList(odd, list_even), true);
   });
 });
+
+
+describe("slice()", function() {
+  it('slice test 1', function () {
+    assert.equal(_.isSameList(_.slice(list,0), list), true);
+  });
+  it('slice test 2', function () {
+    assert.equal(_.isSameList(_.slice(list,0,2), [1,2]), true);
+  });
+  it('slice test 3', function () {
+    assert.equal(_.isSameList(_.slice(list,undefined,2), [1,2]), true);
+  });
+  it('slice test 4', function () {
+    assert.equal(_.isSameList(_.slice(list,2), [3,4]), true);
+  });
+  it('slice test 5', function () {
+    assert.equal(_.isSameList(_.slice(list,1,3), [2,3]), true);
+  });
+});

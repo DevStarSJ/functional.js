@@ -49,7 +49,7 @@ const each = (list, func) => {
       func(list[i]);
     }
   } else {
-    for (var key in list) func(list[key]);
+    for (let key in list) func(list[key]);
   }
 }
 module.exports.each = each;
@@ -78,7 +78,7 @@ function getKeys(obj) {
   if (isFalse(obj)) return [];
 
   let keys = []
-  for (var key in obj) {
+  for (let key in obj) {
     keys.push(key);
   }
   return keys;
@@ -135,15 +135,12 @@ module.exports.reduce = reduce;
 function pipe() {
   const func_list = arguments;
   return function(arg) {
-    return reduce(func_list, function(memo, fn) {
-      return fn(memo);
-    }, arg);
+    return reduce(func_list, (acc, fn) => fn(acc), arg);
   }
 }
 module.exports.pipe = pipe;
 
-
-// filter
+// filter, reject
 
 function filter(list, pred) {
   if (isFalse(list)) return [];
@@ -162,3 +159,22 @@ function reject(list, pred) {
   return filter(list, pred);
 }
 module.exports.reject = reject;
+
+
+// slice
+
+function slice(list, start, end) {
+  if (isFalse(list)) return [];
+  const length = list.length;
+  if (isFalse(length)) return [];
+  let result = [];
+  if (isFalse(end)) end = length;
+  if (isFalse(start)) start = 0;
+  for (let i = 0; i < end; i++) {
+    if (start <= i && i < end) {
+      result.push(list[i]);
+    }
+  }
+  return result;
+}
+module.exports.slice = slice;
