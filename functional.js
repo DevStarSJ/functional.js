@@ -133,7 +133,10 @@ module.exports.reduce = reduce;
 // pipe
 
 function pipe() {
-  const func_list = arguments;
+  const func_list =
+    arguments.length == 1 && get(arguments,0).hasOwnProperty("length") ?
+    arguments[0] :
+    arguments;
   return function(arg) {
     return reduce(func_list, (acc, fn) => fn(acc), arg);
   }
@@ -178,3 +181,11 @@ function slice(list, start, end) {
   return result;
 }
 module.exports.slice = slice;
+
+function go() {
+  if (arguments.length < 2) return undefined;
+  const data = get(arguments, 0);
+  const funcs = slice(arguments, 1);
+  return pipe(funcs)(data);
+}
+module.exports.go = go;

@@ -226,6 +226,13 @@ describe("pipe()", function() {
     const func = _.pipe(square, get4);
     assert.equal(func(list), 16);
   });
+  it('pipe test : input list', function () {
+    const square = _.map(a => a * a);
+    const get4 = _.get(3);
+    const func_list = [square, get4];
+    const func = _.pipe(func_list);
+    assert.equal(func(list), 16);
+  });
 });
 
 describe("filter()", function() {
@@ -284,5 +291,14 @@ describe("slice()", function() {
   });
   it('slice test 5', function () {
     assert.equal(_.isSameList(_.slice(list,1,3), [2,3]), true);
+  });
+});
+
+
+describe("go()", function() {
+  it('go test', function () {
+    const square = _.map(a => a * a);
+    const get4 = _.get(3);
+    assert.equal(_.go(list, square, get4), 16);
   });
 });
