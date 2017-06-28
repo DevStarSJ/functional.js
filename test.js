@@ -12,6 +12,8 @@ const empty_list = [];
 const list_for_array_like = [1, 2, 3];
 const list_for_obj = [1, "Luna", 23];
 const keys_for_obj = ["id", "name", "age"];
+const list_odd = [2,4];
+const list_even = [1, 3];
 
 
 describe("isFalse()", function() {
@@ -223,5 +225,45 @@ describe("pipe()", function() {
     const get4 = _.get(3);
     const func = _.pipe(square, get4);
     assert.equal(func(list), 16);
+  });
+});
+
+describe("filter()", function() {
+  it('filter test 1', function () {
+    const odd = _.filter(list, a => a%2 == 0);
+    assert.equal(_.isSameList(odd, list_odd), true);
+  });
+  it('filter test 2', function () {
+    const odd = _.filter(list, a => a%2 == 1);
+    assert.equal(_.isSameList(odd, list_even), true);
+  });
+  it('filter test 3', function () {
+    const odd = _.filter(list, a => a%2 == 0);
+    assert.equal(_.isSameList(odd, list_even), false);
+  });
+  it('filter currying test', function () {
+    const filterOdd = _.filter(a => a%2 == 0);
+    const odd = filterOdd(list);
+    assert.equal(_.isSameList(odd, list_odd), true);
+  });
+});
+
+describe("reject()", function() {
+  it('reject test 1', function () {
+    const odd = _.reject(list, a => a%2 == 0);
+    assert.equal(_.isSameList(odd, list_even), true);
+  });
+  it('reject test 2', function () {
+    const odd = _.reject(list, a => a%2 == 1);
+    assert.equal(_.isSameList(odd, list_odd), true);
+  });
+  it('reject test 3', function () {
+    const odd = _.reject(list, a => a%2 == 0);
+    assert.equal(_.isSameList(odd, list_odd), false);
+  });
+  it('reject currying test', function () {
+    const filterOdd = _.reject(a => a%2 == 0);
+    const odd = filterOdd(list);
+    assert.equal(_.isSameList(odd, list_even), true);
   });
 });

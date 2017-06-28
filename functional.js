@@ -141,3 +141,24 @@ function pipe() {
   }
 }
 module.exports.pipe = pipe;
+
+
+// filter
+
+function filter(list, pred) {
+  if (isFalse(list)) return [];
+  if (arguments.length == 1) return curryr(filter)(list);
+  let result = [];
+  each(list, a => { if (pred(a)) result.push(a) });
+  return result;
+}
+module.exports.filter = filter;
+
+function reject(list, pred) {
+  if (isFalse(list)) return [];
+  pred = arguments.length == 1 ? list : pred;
+  pred = pipe(pred, isFalse);
+  if (arguments.length == 1)  return curryr(filter)(pred);
+  return filter(list, pred);
+}
+module.exports.reject = reject;
