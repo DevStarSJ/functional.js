@@ -165,9 +165,21 @@ function go() {
     return pipe(funcs)(data);
 }
 exports.go = go;
-// function add(a,b) {
-//     return a + b;
-// }
-//
-// let cadd = curry(add)(10);
-// console.log(cadd(5));
+function random() {
+    return Math.random();
+}
+exports.random = random;
+function randomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(random() * (max - min + 1)) + min;
+}
+exports.randomInt = randomInt;
+function sample(list) {
+    if (exports.isFalse(list) || !exports.isArray(list))
+        return undefined;
+    const length = list.length;
+    const index = randomInt(0, length);
+    return get(list, index);
+}
+exports.sample = sample;

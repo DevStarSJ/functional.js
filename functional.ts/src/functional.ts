@@ -146,14 +146,19 @@ export function go() {
     return pipe(funcs)(data);
 }
 
+export function random() {
+    return Math.random();
+}
 
+export function randomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(random() * (max - min + 1)) + min;
+}
 
-
-
-// function add(a,b) {
-//     return a + b;
-// }
-//
-// let cadd = curry(add)(10);
-// console.log(cadd(5));
-
+export function sample(list) {
+    if (isFalse(list) || !isArray(list)) return undefined;
+    const length = list.length;
+    const index = randomInt(0, length);
+    return get(list, index);
+}
