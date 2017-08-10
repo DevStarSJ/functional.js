@@ -194,14 +194,9 @@ function sample(list) {
 exports.sample = sample;
 function goAsync(data, ...args) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.info("in async_go : ", args);
         let acc = data;
-        console.info("before foreach : ", acc);
-        for (let i = 0; i < args.length; i++) {
+        for (let i = 0; i < args.length; i++)
             acc = yield args[i](acc);
-            console.info("in foreach: ", acc);
-        }
-        console.info("after foreach : ", acc);
         return acc;
     });
 }

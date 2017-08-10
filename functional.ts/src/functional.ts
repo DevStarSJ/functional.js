@@ -166,15 +166,8 @@ export function sample(list) {
 }
 
 export async function goAsync(data: any, ...args: any[]): Promise<any> {
-
-    console.info("in async_go : ", args);
     let acc: any = data;
-    console.info("before foreach : ", acc);
-    for (let i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i++)
         acc = await args[i](acc);
-        console.info("in foreach: ", acc);
-
-    }
-    console.info("after foreach : ", acc);
     return acc;
 }
