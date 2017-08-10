@@ -192,7 +192,7 @@ function sample(list) {
     return get(list, index);
 }
 exports.sample = sample;
-function async_go(data, ...args) {
+function goAsync(data, ...args) {
     return __awaiter(this, void 0, void 0, function* () {
         console.info("in async_go : ", args);
         let acc = data;
@@ -205,4 +205,4 @@ function async_go(data, ...args) {
         return acc;
     });
 }
-exports.async_go = async_go;
+exports.goAsync = goAsync;

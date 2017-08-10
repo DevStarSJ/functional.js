@@ -165,7 +165,7 @@ export function sample(list) {
     return get(list, index);
 }
 
-export async function async_go(data: any, ...args: any[]): Promise<any> {
+export async function goAsync(data: any, ...args: any[]): Promise<any> {
 
     console.info("in async_go : ", args);
     let acc: any = data;
