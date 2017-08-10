@@ -1,3 +1,5 @@
+// https://github.com/DevStarSJ/functional.js
+
 export function curry (func) {
     return function(a) {
         return function(b) {
@@ -139,7 +141,7 @@ export function slice(list, start, end?) {
     return result;
 }
 
-export function go() {
+export function go(...args: any[]) {
     if (arguments.length < 2) return undefined;
     const data = get(arguments, 0);
     const funcs = slice(arguments, 1);
@@ -161,4 +163,18 @@ export function sample(list) {
     const length = list.length;
     const index = randomInt(0, length);
     return get(list, index);
+}
+
+export async function async_go(data: any, ...args: any[]): Promise<any> {
+
+    console.info("in async_go : ", args);
+    let acc: any = data;
+    console.info("before foreach : ", acc);
+    for (let i = 0; i < args.length; i++) {
+        acc = await args[i](acc);
+        console.info("in foreach: ", acc);
+
+    }
+    console.info("after foreach : ", acc);
+    return acc;
 }
