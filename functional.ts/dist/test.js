@@ -15,6 +15,10 @@ const keys_for_obj = ["id", "name", "age"];
 const list_odd = [2,4];
 const list_even = [1, 3];
 
+const add2 = (a, b) => a + b;
+const sub2 = (a, b) => a - b;
+const sub4 = (a, b, c, d) => a - b - c - d;
+
 
 describe("isFalse()", function() {
   it('undefined -> true', function() {
@@ -179,10 +183,6 @@ describe("get()", function() {
   it('key not in object -> undefined', function() {
     assert.equal(_.get(obj, "id1"), undefined);
   });
-  it('curryr test', function() {
-    const getId = _.get("id");
-    assert.equal(getId(obj), obj.id);
-  });
   it('index in list', function() {
     assert.equal(_.get(list, 3), 4);
   });
@@ -300,5 +300,27 @@ describe("go()", function() {
     const square = _.map(a => a * a);
     const get4 = _.get(3);
     assert.equal(_.go(list, square, get4), 16);
+  });
+});
+
+describe("curry()", function() {
+  it('curry test', function() {
+    const subTest1 = _.curry(sub2)(10);
+    assert.equal(subTest1(3), 7);
+    const subTest2 = _.curry(sub4)(6, 3);
+    assert.equal(subTest2(1, 2), 0);
+    const subTest3 = _.curry(sub4)(7, 1, 2);
+    assert.equal(subTest3(3), 1);
+  });
+});
+
+describe("curryr()", function() {
+  it('curryr test', function() {
+    const subTest1 = _.curryr(sub2)(3);
+    assert.equal(subTest1(10), 7);
+    const subTest2 = _.curryr(sub4)(1,2);
+    assert.equal(subTest2(6,3), 0);
+    const subTest3 = _.curryr(sub4)(1,2,3);
+    assert.equal(subTest3(7), 1);
   });
 });

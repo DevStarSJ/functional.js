@@ -1,17 +1,17 @@
 // https://github.com/DevStarSJ/functional.js
 
 export function curry (func) {
-    return function(a) {
-        return function(b) {
-            return func(a, b);
+    return function(...a) {
+        return function(...b) {
+            return func(...a, ...b);
         }
     }
 }
 
 export function curryr (func) {
-    return function(a) {
-        return function(b) {
-            return func(b, a);
+    return function(...a) {
+        return function(...b) {
+            return func(...b, ...a);
         }
     }
 }

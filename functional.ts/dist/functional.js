@@ -10,17 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 function curry(func) {
-    return function (a) {
-        return function (b) {
-            return func(a, b);
+    return function (...a) {
+        return function (...b) {
+            return func(...a, ...b);
         };
     };
 }
 exports.curry = curry;
 function curryr(func) {
-    return function (a) {
-        return function (b) {
-            return func(b, a);
+    return function (...a) {
+        return function (...b) {
+            return func(...b, ...a);
         };
     };
 }

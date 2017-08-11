@@ -12,6 +12,7 @@
     "mysql": "^2.13.0"
   },
   "devDependencies": {
-    "@types/mysql": "0.0.33"
+    "@types/mysql": "0.0.33",
+    "mocha": "^3.5.0"
   }
 }
