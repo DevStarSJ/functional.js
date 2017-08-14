@@ -1,18 +1,15 @@
 {
-  "name": "functional.ts",
+  "name": "functional-ts",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "utilitiy functions",
+  "main": "./dist/functional.js",
+  "types": "./src/.functional.ts",
   "scripts": {
     "test": "mocha test.js"
   },
-  "author": "",
+  "author": "seokjoon.yun@gmail.com",
   "license": "ISC",
-  "dependencies": {
-    "mysql": "^2.13.0"
-  },
   "devDependencies": {
-    "@types/mysql": "0.0.33",
     "mocha": "^3.5.0"
   }
 }
