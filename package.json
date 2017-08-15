@@ -1,6 +1,6 @@
 {
   "name": "functional-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "utilitiy functions",
   "main": "./dist/functional.js",
   "types": "./src/.functional.ts",
