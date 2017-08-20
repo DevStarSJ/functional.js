@@ -7,6 +7,8 @@ const _ = require("./dist/functional");
 const obj = { id: 1, name: "Luna", age: 23 };
 const list = [ 1, 2, 3, 4 ];
 const array_like = {0:1, 1:2, 2:3, length: 3};
+const obj2 = {id: 2 , obj: obj};
+const obj3 = {id: 3, l: [obj, obj2, obj]};
 
 const empty_list = [];
 const list_for_array_like = [1, 2, 3];
@@ -177,7 +179,6 @@ describe("get()", function() {
     assert.equal(_.get("", "id"), undefined);
   });
   it('key in object', function() {
-    const id = _.get(obj, "id");
     assert.equal(_.get(obj, "id"), obj.id);
   });
   it('key not in object -> undefined', function() {
@@ -188,6 +189,16 @@ describe("get()", function() {
   });
   it('index not in list -> undefined', function() {
     assert.equal(_.get(list, 4), undefined);
+  });
+  it('get multi-depth: key string', function() {
+    assert.equal(_.get(obj2, "obj.age"), 23);
+  });
+  it('get multi-depth: key string[]', function() {
+    assert.equal(_.get(obj2, ["obj","age"]), 23);
+  });
+  it('get complex obj', function() {
+    assert.equal(_.get(obj3, ["l", 1, "id"]), 2);
+    assert.equal(_.get(obj3, ["l", 0, "id"]), 1);
   });
 });
 
@@ -222,13 +233,13 @@ describe("reduce()", function() {
 describe("pipe()", function() {
   it('pipe test', function () {
     const square = _.map(a => a * a);
-    const get4 = _.get(3);
+    const get4 = _.curryr(_.get)(3, undefined);
     const func = _.pipe(square, get4);
     assert.equal(func(list), 16);
   });
   it('pipe test : input list', function () {
     const square = _.map(a => a * a);
-    const get4 = _.get(3);
+    const get4 = _.curryr(_.get)(3, undefined);
     const func_list = [square, get4];
     const func = _.pipe(func_list);
     assert.equal(func(list), 16);
@@ -298,7 +309,7 @@ describe("slice()", function() {
 describe("go()", function() {
   it('go test', function () {
     const square = _.map(a => a * a);
-    const get4 = _.get(3);
+    const get4 = _.curryr(_.get)(3, undefined);
     assert.equal(_.go(list, square, get4), 16);
   });
 });

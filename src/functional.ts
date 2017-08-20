@@ -65,14 +65,32 @@ export function getKeys(obj) {
     return keys;
 }
 
-export function get(obj, key) {
-    if (arguments.length == 1) return curryr(get)(obj);
-    if (isFalse(obj)) return undefined;
-    if (isArray(obj)) { // key == length
-        if (obj.length <= key) return undefined; // out of range
-        return obj[key];
-    } else if (hasKey(obj, key)) return obj[key];
-    return undefined;
+type stringOrNumber = string | number;
+
+export function get(obj: any, key: number | string | stringOrNumber [] , defaultValue = undefined): any {
+    if (isFalse(obj)) return defaultValue;
+
+    let keys: stringOrNumber[] = [];
+    if (typeof key === "string") {
+        keys = key.split(".")
+            .map(k => parseInt(k) >= 0 ? parseInt(k) : k.trim())
+            .filter(k => typeof k === "number" || (typeof k === "string" && k.length > 0));
+    } else if (typeof key === "number") {
+        keys.push(key);
+    } else {
+        keys = key;
+    }
+
+    if (keys.length === 0) {
+        return obj;
+    }
+
+    const travelingNode = isArray(obj) ?
+        (typeof keys[0] === "number" && obj.length > keys[0] ? obj[keys[0]] : defaultValue) :
+        (typeof keys[0] === "string" ? obj[keys[0]] || defaultValue : defaultValue);
+
+    return keys.length === 1 ? travelingNode :
+        get(travelingNode, keys.slice(1), defaultValue);
 }
 
 export function map(list, func) {

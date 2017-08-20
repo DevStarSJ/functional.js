@@ -77,19 +77,29 @@ function getKeys(obj) {
     return keys;
 }
 exports.getKeys = getKeys;
-function get(obj, key) {
-    if (arguments.length == 1)
-        return curryr(get)(obj);
+function get(obj, key, defaultValue = undefined) {
     if (exports.isFalse(obj))
-        return undefined;
-    if (exports.isArray(obj)) {
-        if (obj.length <= key)
-            return undefined; // out of range
-        return obj[key];
+        return defaultValue;
+    let keys = [];
+    if (typeof key === "string") {
+        keys = key.split(".")
+            .map(k => parseInt(k) >= 0 ? parseInt(k) : k.trim())
+            .filter(k => typeof k === "number" || (typeof k === "string" && k.length > 0));
     }
-    else if (hasKey(obj, key))
-        return obj[key];
-    return undefined;
+    else if (typeof key === "number") {
+        keys.push(key);
+    }
+    else {
+        keys = key;
+    }
+    if (keys.length === 0) {
+        return obj;
+    }
+    const travelingNode = exports.isArray(obj) ?
+        (typeof keys[0] === "number" && obj.length > keys[0] ? obj[keys[0]] : defaultValue) :
+        (typeof keys[0] === "string" ? obj[keys[0]] || defaultValue : defaultValue);
+    return keys.length === 1 ? travelingNode :
+        get(travelingNode, keys.slice(1), defaultValue);
 }
 exports.get = get;
 function map(list, func) {
