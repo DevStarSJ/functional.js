@@ -211,3 +211,31 @@ function goAsync(data, ...args) {
     });
 }
 exports.goAsync = goAsync;
+function isInteger(s) {
+    const n = Number(s);
+    return n === +n && n === (n | 0);
+}
+exports.isInteger = isInteger;
+function toBoolean(value) {
+    return value === true || value === "true" || value > 0 ? true : false;
+}
+exports.toBoolean = toBoolean;
+function isNullOrEmpty(word) {
+    return word === undefined || word === null || word === '' ? true : false;
+}
+exports.isNullOrEmpty = isNullOrEmpty;
+function nvl(value, defaultValue = null, func = null) {
+    return isNullOrEmpty(value) ? defaultValue : func ? func(value) : value;
+}
+exports.nvl = nvl;
+function distinct(list) {
+    return nvl(list, [], l => {
+        let set = [];
+        l.forEach(i => {
+            if (set.indexOf(i) < 0)
+                set.push(i);
+        });
+        return set;
+    });
+}
+exports.distinct = distinct;

@@ -183,9 +183,43 @@ export function sample(list) {
     return get(list, index);
 }
 
+
 export async function goAsync(data: any, ...args: any[]): Promise<any> {
     let acc: any = data;
     for (let i = 0; i < args.length; i++)
         acc = await args[i](acc);
     return acc;
+}
+
+
+export function isInteger(s) {
+    const n = Number(s);
+    return n === +n && n === (n|0);
+}
+
+
+export function toBoolean(value: string | boolean | number): boolean {
+    return value === true || value === "true" || value > 0 ? true : false;
+}
+
+
+export function isNullOrEmpty(word) {
+    return word === undefined || word === null || word === '' ? true : false;
+}
+
+
+export function nvl(value, defaultValue = null, func = null) {
+    return isNullOrEmpty(value) ? defaultValue : func ? func(value) : value;
+}
+
+
+export function distinct(list: any[]) : any[] {
+    return nvl(list, [], l => {
+        let set = [];
+        l.forEach(i => {
+            if (set.indexOf(i) < 0)
+                set.push(i);
+        });
+        return set;
+    });
 }
