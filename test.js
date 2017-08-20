@@ -8,7 +8,7 @@ const obj = { id: 1, name: "Luna", age: 23 };
 const list = [ 1, 2, 3, 4 ];
 const array_like = {0:1, 1:2, 2:3, length: 3};
 const obj2 = {id: 2 , obj: obj};
-const obj3 = {id: 3, l: [obj, obj2, obj]};
+const obj3 = {id: 3, l: [obj, obj2, obj], '0': 10, '1': 20};
 
 const empty_list = [];
 const list_for_array_like = [1, 2, 3];
@@ -199,6 +199,10 @@ describe("get()", function() {
   it('get complex obj', function() {
     assert.equal(_.get(obj3, ["l", 1, "id"]), 2);
     assert.equal(_.get(obj3, ["l", 0, "id"]), 1);
+  });
+  it('get key name is number', function() {
+    assert.equal(_.get(obj3, [0]), 10);
+    assert.equal(_.get(obj3, [1]), 20);
   });
 });
 

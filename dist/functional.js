@@ -97,7 +97,7 @@ function get(obj, key, defaultValue = undefined) {
     }
     const travelingNode = exports.isArray(obj) ?
         (typeof keys[0] === "number" && obj.length > keys[0] ? obj[keys[0]] : defaultValue) :
-        (typeof keys[0] === "string" ? obj[keys[0]] || defaultValue : defaultValue);
+        obj[keys[0]] || defaultValue;
     return keys.length === 1 ? travelingNode :
         get(travelingNode, keys.slice(1), defaultValue);
 }
