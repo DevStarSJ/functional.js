@@ -1,14 +1,25 @@
 {
   "name": "functional-ts",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "utilitiy functions",
   "main": "./dist/functional.js",
   "types": "./src/.functional.ts",
   "scripts": {
     "test": "mocha test.js"
   },
-  "author": "seokjoon.yun@gmail.com",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevStarSJ/functional.js.git"
+  },
+  "keywords": [
+    "functional"
+  ],
+  "author": "Yun Seok-Joon <seokjoon.yun@gmail.com> (https://devstarsj.github.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DevStarSJ/functional.js/issues"
+  },
+  "homepage": "https://github.com/DevStarSJ/functional.js#readme",
   "devDependencies": {
     "mocha": "^3.5.0"
   }
