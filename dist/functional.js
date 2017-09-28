@@ -229,13 +229,6 @@ function nvl(value, defaultValue = null, func = null) {
 }
 exports.nvl = nvl;
 function distinct(list) {
-    return nvl(list, [], l => {
-        let set = [];
-        l.forEach(i => {
-            if (set.indexOf(i) < 0)
-                set.push(i);
-        });
-        return set;
-    });
+    return list ? list.filter((v, i, self) => self.indexOf(v) == i) : [];
 }
 exports.distinct = distinct;

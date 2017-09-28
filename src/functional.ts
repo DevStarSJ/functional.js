@@ -214,12 +214,5 @@ export function nvl(value, defaultValue = null, func = null) {
 
 
 export function distinct(list: any[]) : any[] {
-    return nvl(list, [], l => {
-        let set = [];
-        l.forEach(i => {
-            if (set.indexOf(i) < 0)
-                set.push(i);
-        });
-        return set;
-    });
+    return list ? list.filter((v, i, self) => self.indexOf(v) == i) : [];
 }

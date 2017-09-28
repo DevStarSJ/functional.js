@@ -339,3 +339,11 @@ describe("curryr()", function() {
     assert.equal(subTest3(7), 1);
   });
 });
+
+describe("distinct()", function() {
+  it('distinct test', function() {
+    const list = [1,2,3,4,5,4,3,2,1,3,4,2];
+    const distList = _.distinct(list);
+    assert.equal(distList.length, 5);
+  });
+});
