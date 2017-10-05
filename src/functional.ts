@@ -93,15 +93,18 @@ export function get(obj: any, key: number | string | stringOrNumber [] , default
         get(travelingNode, keys.slice(1), defaultValue);
 }
 
-export function map(list, func) {
-    if (isFalse(list)) return [];
-    if (arguments.length == 1) return curryr(map)(list);
+export function map(list, func?) {
+    if (arguments.length == 1) return curryr(map)(list); // curryr 내장
+
+	if (isFalse(list)) return [];
     let result = [];
     each(list, a => result.push(func(a)));
     return result;
 }
 
-export function reduce(list, func, base) {
+export function reduce(list, func, base?) {
+	if (arguments.length == 2) return curryr(reduce)(list, func); // curryr 내장
+
     if (isFalse(list)) return base;
     let start = 0;
     let result = base;
@@ -128,19 +131,24 @@ export function pipe(...args: any[]) {
     }
 }
 
-export function filter(list, pred) {
+export function filter(list, pred?) {
+	if (arguments.length == 1) return curryr(filter)(list); // curryr 내장
+
     if (isFalse(list)) return [];
-    if (arguments.length == 1) return curryr(filter)(list);
+
     let result = [];
     each(list, a => { if (pred(a)) result.push(a) });
     return result;
 }
 
-export function reject(list, pred) {
+export function reject(list, pred?) {
+	if (arguments.length == 1) return curryr(reject)(list); // curryr 내장
+
     if (isFalse(list)) return [];
+
     pred = arguments.length == 1 ? list : pred;
     pred = pipe(pred, isFalse);
-    if (arguments.length == 1)  return curryr(filter)(pred);
+
     return filter(list, pred);
 }
 
@@ -214,5 +222,88 @@ export function nvl(value, defaultValue = null, func = null) {
 
 
 export function distinct(list: any[]) : any[] {
-    return list ? list.filter((v, i, self) => self.indexOf(v) == i) : [];
+    const result = [];
+    list.forEach(one => {
+        if (result.every(e => !deepEqual(e, one))) {
+            result.push(one);
+        }
+    });
+
+    return result;
 }
+
+
+export function all(list: any, pred?) {
+	if (arguments.length == 1) return curryr(all)(list); // curryr 내장
+
+    return isArray(list) ? list.every(pred) : false;
+}
+
+
+export function any(list: any, pred?) {
+	if (arguments.length == 1) return curryr(any)(list); // curryr 내장
+
+	return isArray(list) ? list.some(pred) : false;
+}
+
+
+export function deepEqual(a: any, b: any) {
+    const type = typeof a;
+
+    if (type != typeof b)
+        return false;
+
+    if (type != "object")
+        return a === b;
+
+    const keysOfA = getKeys(a);
+    const keysOfB = getKeys(b);
+
+    if (keysOfA.length != keysOfB.length)
+        return false;
+
+    if (keysOfA.some(key => keysOfB.indexOf(key) < 0))
+        return false;
+
+    return keysOfA.every(key => deepEqual(a[key],b[key]));
+}
+
+
+export function subObj(obj: any, keys?: string[]) {
+	if (arguments.length == 1) return curryr(subObj)(obj); // curryr 내장
+
+	const data = {};
+	keys.forEach(key => { data[key] = obj[key]; });
+	return data;
+}
+
+
+export function minusObjByKeys(obj: any, keys?: string[]) {
+	if (arguments.length == 1) return curryr(minusObjByKeys)(obj); // curryr 내장
+
+	let data = Object.assign({}, obj);
+	keys.forEach(key => { delete data[key]; });
+	return data;
+}
+
+
+export function getSubProprtties(group: any, list?: any, label: string = "values") {
+	if (arguments.length == 2) return curryr(getSubProprtties)(group, list); // curryr 내장
+
+    const keys = getKeys(group);
+	group[label]= go(list,
+        filter(row => all(keys, key => group[key] == row[key])),
+        map(minusObjByKeys(keys)));
+	return group;
+}
+
+
+export function groupBy(list: any[], keys?: string[] | string, label: string = "values") {
+    if (arguments.length == 2) return curryr(groupBy)(list, keys);// curryr 내장
+
+    return go(list,
+        map(subObj(keys)),
+        distinct,
+        map(getSubProprtties(list, label)));
+}
+

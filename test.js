@@ -226,7 +226,7 @@ describe("map()", function() {
 
 describe("reduce()", function() {
   it('reduce test', function() {
-    assert.equal(_.reduce(list, (a,b) => a+b), 10);
+    assert.equal(_.reduce(list, (a,b) => a+b, 0), 10);
   });
   it('reduce with default value test', function() {
     assert.equal(_.reduce(list, (a,b) => a+b, -10), 0);
@@ -346,4 +346,25 @@ describe("distinct()", function() {
     const distList = _.distinct(list);
     assert.equal(distList.length, 5);
   });
+});
+
+describe("groupBy()", function() {
+	it('groupBy test', function() {
+		const list = [
+			{ local1: "서울", code: 11, local2: "마포구", value: 2},
+			{ local1: "서울", code: 11, local2: "종로구", value: 1},
+			{ local1: "서울", code: 11, local2: "강남구", value: 3},
+			{ local1: "서울", code: 11, local2: "강서구", value: 4},
+			{ local1: "경기도", code: 20, local2: "수원", value: 1},
+			{ local1: "경기도", code: 20, local2: "성남", value: 3},
+			{ local1: "경기도", code: 20, local2: "용인", value: 5},
+			{ local1: "경기도", code: 20, local2: "부천", value: 6},
+		];
+
+		const result = _.groupBy(list, ["local1", "code"], "local2s");
+		assert.equal(result.length, 2);
+		assert.equal(result[0].local1, "서울");
+		assert.equal(result[0].local2s.length, 4);
+		assert.equal(result[1].local2s.length, 4);
+	});
 });
