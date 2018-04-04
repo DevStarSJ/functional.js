@@ -297,3 +297,29 @@ function groupBy(list, keys, label = "values") {
     return go(list, map(subObj(keys)), distinct, map(getSubProprtties(list, label)));
 }
 exports.groupBy = groupBy;
+function head(list) {
+    if (exports.isArray(list))
+        return list.length > 0 ? list[0] : undefined;
+    return list;
+}
+exports.head = head;
+function hasSameKeys(left, right, keys) {
+    if (!left)
+        return false;
+    if (!right)
+        return false;
+    for (const key of keys)
+        if (!deepEqual(left[key], right[key]))
+            return false;
+    return true;
+}
+exports.hasSameKeys = hasSameKeys;
+function leftJoin(lefts, rights, keys) {
+    const compFunc1 = curryr(hasSameKeys)(keys);
+    return lefts.map(left => {
+        const compFunc2 = curry(compFunc1)(left);
+        const right = head(rights.filter(right => compFunc2(right)));
+        return Object.assign(left, right);
+    });
+}
+exports.leftJoin = leftJoin;

@@ -368,3 +368,80 @@ describe("groupBy()", function() {
 		assert.equal(result[1].local2s.length, 4);
 	});
 });
+
+describe("head()", function() {
+
+	const list = [
+		{ local1: "서울", code: 11, local2: "마포구", value: 2},
+		{ local1: "서울", code: 11, local2: "종로구", value: 1},
+		{ local1: "서울", code: 11, local2: "강남구", value: 3},
+		{ local1: "서울", code: 11, local2: "강서구", value: 4},
+		{ local1: "경기도", code: 20, local2: "수원", value: 1},
+		{ local1: "경기도", code: 20, local2: "성남", value: 3},
+		{ local1: "경기도", code: 20, local2: "용인", value: 5},
+		{ local1: "경기도", code: 20, local2: "부천", value: 6},
+	];
+
+	it('array test', function() {
+		const result = _.head(list);
+		assert.equal(result.local1, "서울");
+		assert.equal(result.local2, "마포구");
+	});
+
+	it('object test', function() {
+		const result2 = _.head(_.head(list));
+		assert.equal(result2.local1, "서울");
+		assert.equal(result2.local2, "마포구");
+
+		assert.equal(_.head([]), undefined);
+	});
+
+	it('empty array test', function() {
+		assert.equal(_.head([]), undefined);
+	});
+});
+
+describe("hasSameKeys()", function() {
+
+	const a = {id: 1, name: 'a'};
+	const b = {id: 1, name: 'b'};
+	const c = {id: 2, name: 'a'};
+
+	it('same key test', function() {
+		assert.equal(_.hasSameKeys(a,b,['id']),true);
+		assert.equal(_.hasSameKeys(a,c,['name']),true);
+	});
+
+	it('different key test', function() {
+		const result2 = _.head(_.head(list));
+		assert.equal(_.hasSameKeys(a,c,['id']),false);
+		assert.equal(_.hasSameKeys(a,b,['name']),false);
+	});
+
+	it('compare with undefined test', function() {
+		assert.equal(_.hasSameKeys(a,null),false);
+		assert.equal(_.hasSameKeys(a,undefined),false);
+	});
+});
+
+
+describe("leftJoin()", function() {
+
+	const a = [{id: 1, name: 'a'}, {id: 2, name: 'b'}];
+	const b = [{id: 1, city: 'b'}, {id: 2, city: 'd'}];
+	const c = [{id: 2, address: 'e'}, {id: 3, address: 'f'}];
+
+	it('same properties test', function() {
+		const d = _.leftJoin(a, b, ['id']);
+		assert.equal(d.length, 2);
+		assert.equal(d[0].city,'b');
+		assert.equal(d[1].id,2);
+	});
+
+	it('different properties test', function() {
+		const d = _.leftJoin(a, c, ['id']);
+		assert.equal(d.length, 2);
+		assert.equal(d[1].address,'e');
+		assert.equal(d[0]['address'], undefined);
+	});
+});

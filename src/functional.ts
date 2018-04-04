@@ -307,3 +307,30 @@ export function groupBy(list: any[], keys?: string[] | string, label: string = "
         map(getSubProprtties(list, label)));
 }
 
+
+export function head(list: any[]) {
+    if (isArray(list))
+        return list.length > 0 ? list[0] : undefined;
+    return list;
+}
+
+
+export function hasSameKeys(left: any, right: any, keys: any[]) {
+    if (!left) return false;
+    if (!right) return false;
+    for (const key of keys)
+        if (!deepEqual(left[key], right[key]))
+            return false;
+    return true;
+}
+
+
+export function leftJoin(lefts: any[], rights: any[], keys: any[]) {
+    const compFunc1 = curryr(hasSameKeys)(keys);
+    return lefts.map(left => {
+        const compFunc2 = curry(compFunc1)(left);
+        const right = head(rights.filter(right => compFunc2(right)));
+        return Object.assign(left, right);
+    });
+}
+
